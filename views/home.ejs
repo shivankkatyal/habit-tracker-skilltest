@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="/css/home.css">
+
+<div id="form-container">
+    <form action="/habit/create" id="habits-form" method="POST">
+        <h2>Add a habit to track</h2>
+        <hr>
+        <h3>Habit Name</h3>
+        <textarea name="content" id="new-post-content" rows="2" placeholder="Type Here..." required></textarea>
+        <input type="submit" value="Add Habit">
+    </form>
+</div>
+<div id="habit_container">
+    <h2>
+        &ensp;List of Habits:-
+    </h2>
+    <ul>
+    <% habit.forEach(habits=> {
+        let tzoffset = (new Date()).getTimezoneOffset() * 60000, found=false, status='';
+        var today = (new Date(Date.now() - tzoffset)).toISOString().slice(0, 10);
+        habits.dates.find(function (item, index) {
+        if(item.date === today){
+        found = true;
+        status = item.complete;
+        }
+        });
+        %>
+        <li>
+            <div class="habit-header-container">
+                <h2><%= habits.content %></h2>
+                <small>
+                    <a class="delete-habit-button" href="/habit/destroy/<%= habits._id %>" style="color: red; text-decoration: none;">DELETE HABIT</a>
+                </small>
+            </div>
+
+            <div>
+                <% days.forEach(day=> { let found = false, status = '';
+                    habits.dates.find(function (item, index) {
+                    if(item.date === day.date)
+                    {
+                    found = true;
+                    status = item.complete;
+                    }
+                    });
+                    %>
+                    <div>
+                        <table class="table table-bordered" >
+                                <tr>
+                                    <th>
+                                        <div>
+                                            <div>
+                                                <%= day.day %> <br>
+                                                    <span>
+                                                        <%= day.date.slice(-2) %>
+                                                    </span>
+                                            </div>
+
+                                        </div>
+                                    </th>
+                                    <td class="pb-2" style="text-align: center;">
+                                        <a href="habitStatus/?id=<%= habits._id %>&date=<%= day.date %>">
+                                            <% if(found && status==='yes' ){ %>
+                                                <abbr title="Click to Undone">
+                                                <i class="fa-solid fa-circle-check fa-2x" style="color: green;"></i>
+                                                </abbr>
+                                            <% } else if(found && status==='no' ){ %>
+                                                <abbr title="Click for Default Value">
+                                                    <i class="fa-sharp fa-solid fa-circle-xmark fa-2x" style="color: red;"></i>
+                                                </abbr>
+                                            <% } else { %>
+                                                <abbr title="Click to mark Done!">
+                                                    <i class="fa-solid fa-circle-minus fa-2x"></i>
+                                                </abbr>
+                                            <% } %>
+                                        </a>
+                                    </td>
+                                </tr>
+                        </table>
+                    </div>
+                <% }) %>
+            </div>
+        </li>
+        <% }) %>
+    </ul>
+</div>
