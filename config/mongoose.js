@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/new_habit_tracker');
+mongoose.connect('mongodb+srv://shivank28011997:Shivank28@cluster0.ozuj3sd.mongodb.net/?retryWrites=true&w=majority');
 
 const db = mongoose.connection;
 
