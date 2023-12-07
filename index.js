@@ -36,7 +36,7 @@ app.use(session({
         maxAge: (1000 * 60 * 100)
     },
     store: MongoStore.create({
-        mongoUrl: 'mongodb://127.0.0.1:27017/new_habit_tracker',
+        mongoUrl: 'mongodb+srv://shivank28011997:Shivank28@cluster0.ozuj3sd.mongodb.net/?retryWrites=true&w=majority',
         autoRemove: 'disabled'
     },
     function(err){
